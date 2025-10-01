@@ -180,25 +180,7 @@
 nvidia-smi
 ```
 
-### Быстрый старт для развертывания. Подробная документация [здесь](./docs/start_services.md)
-1. Запустите стек:
-```bash
-bash ./start.remote.sh
-```
-2. Откройте интерфейс: `http://localhost:7860`
-3. Остановите стек:
-```bash
-bash ./stop.remote.sh
-```
-
-Открытые порты:
-- Triton: `8000` (HTTP), `8001` (gRPC), `8002` (Metrics)
-- RabbitMQ: `5672` (AMQP), `15672` (Management UI, логин/пароль: `guest/guest`)
-- Frontend (Gradio): `7860`
-
-ℹ️ Если порты заняты, остановите конфликтующие сервисы или измените порт-маппинг в compose.
-
-### Быстрый старт для инференса. Подробная документация [здесь](./docs/inference.md#1-быстрый-старт-из-заранее-подготовленных-образов-предпочтительный-вариант)
+### Быстрый старт для внутреннего тестирования. Подробная документация [здесь](./docs/inference.md#1-быстрый-старт-из-заранее-подготовленных-образов-предпочтительный-вариант)
 
 1. Внутри файла `inference.remote.sh` необходимо заменить переменную `YOUR_INPUT_FOLDER_WITH_ZIPS` на абсолютный путь к папке с архивами.
 
@@ -216,7 +198,9 @@ bash ./stop.remote.sh
 #   ...
 #   final_archive.zip
 # НАПРИМЕР: YOUR_INPUT_FOLDER_WITH_ZIPS="/home/borntowarn/projects/chest-diseases/input"
-YOUR_INPUT_FOLDER_WITH_ZIPS="ВАШ ПУТЬ К ПАПКЕ С АРХИВАМИ"
+# НАПРИМЕР: YOUR_INPUT_FOLDER_WITH_ZIPS="C:/ВАШ/ПУТЬ/К/ПАПКЕ/С/АРХИВАМИ"
+
+YOUR_INPUT_FOLDER_WITH_ZIPS="C:/ВАШ/ПУТЬ/К/ПАПКЕ/С/АРХИВАМИ"
 YOUR_OUTPUT_FOLDER="./output"
 
 docker run \
@@ -235,6 +219,24 @@ docker run \
 ```bash
 bash ./inference.remote.sh
 ```
+
+### Быстрый старт для развертывания сервиса. Подробная документация [здесь](./docs/start_services.md)
+1. Запустите стек:
+```bash
+bash ./start.remote.sh
+```
+2. Откройте интерфейс: `http://localhost:7860`
+3. Остановите стек:
+```bash
+bash ./stop.remote.sh
+```
+
+Открытые порты:
+- Triton: `8000` (HTTP), `8001` (gRPC), `8002` (Metrics)
+- RabbitMQ: `5672` (AMQP), `15672` (Management UI, логин/пароль: `guest/guest`)
+- Frontend (Gradio): `7860`
+
+ℹ️ Если порты заняты, остановите конфликтующие сервисы или измените порт-маппинг в compose.
 
 
 ### Локальная сборка образов и запуск стека

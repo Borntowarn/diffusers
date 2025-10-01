@@ -54,5 +54,5 @@ pip install ipykernel
 pip install -r requirements.txt
 ```
 
-8. Для загрузки исходных весов скачайте папку `initial_weights.zip` с исходными моделями и весами в директорию `training/weights` из [Яндекс.Диска](https://disk.yandex.ru/d/nq0x0-Ivx93VJw). Подробнее в [гайде](./models.md#3-для-разработки)
+8. Для загрузки исходных весов скачайте папку `weights.zip` с исходными моделями и весами в директорию `training/weights` из [Яндекс.Диска](https://disk.yandex.ru/d/nq0x0-Ivx93VJw). Подробнее в [гайде](./models.md#3-для-разработки)
 

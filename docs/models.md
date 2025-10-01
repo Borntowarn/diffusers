@@ -53,7 +53,7 @@ cd training
 python download_models.py
 ```
 
-Также можно скачать папку `initial_weights.zip` с исходными моделями и весами в директорию `training/weights` из [Яндекс.Диска](https://disk.yandex.ru/d/nq0x0-Ivx93VJw) чтобы получилась следующая структура:
+Также можно скачать папку `weights.zip` с исходными моделями и весами в директорию `training/weights` из [Яндекс.Диска](https://disk.yandex.ru/d/nq0x0-Ivx93VJw) чтобы получилась следующая структура:
 ```
 training
 │   └── weights
@@ -65,9 +65,6 @@ training
 │       │   ├── model_binary.pth
 │       │   ├── model_multilabel.pth
 │       │   └── models
-│       ├── Vista3D
-│       │   ├── image_encoder.pt
-│       │   └── model.pt
 │       ├── bpr
 │       │   ├── config.json
 │       │   ├── inference-settings.json

@@ -23,7 +23,9 @@
 #   ...
 #   final_archive.zip
 # НАПРИМЕР: YOUR_INPUT_FOLDER_WITH_ZIPS="/home/borntowarn/projects/chest-diseases/input"
-YOUR_INPUT_FOLDER_WITH_ZIPS="ВАШ ПУТЬ К ПАПКЕ С АРХИВАМИ"
+# НАПРИМЕР: YOUR_INPUT_FOLDER_WITH_ZIPS="C:/ВАШ/ПУТЬ/К/ПАПКЕ/С/АРХИВАМИ"
+
+YOUR_INPUT_FOLDER_WITH_ZIPS="C:/ВАШ/ПУТЬ/К/ПАПКЕ/С/АРХИВАМИ"
 YOUR_OUTPUT_FOLDER="./output"
 
 docker run \
@@ -109,7 +111,9 @@ python inference.py
 #   ...
 #   final_archive.zip
 # НАПРИМЕР: YOUR_INPUT_FOLDER_WITH_ZIPS="/home/borntowarn/projects/chest-diseases/input"
-YOUR_INPUT_FOLDER_WITH_ZIPS="ВАШ ПУТЬ К ПАПКЕ С АРХИВАМИ"
+# НАПРИМЕР: YOUR_INPUT_FOLDER_WITH_ZIPS="C:/ВАШ/ПУТЬ/К/ПАПКЕ/С/АРХИВАМИ"
+
+YOUR_INPUT_FOLDER_WITH_ZIPS="C:/ВАШ/ПУТЬ/К/ПАПКЕ/С/АРХИВАМИ"
 YOUR_OUTPUT_FOLDER="./output"
 
 docker build -t inference -f ./Dockerfile.inference.yaml .
