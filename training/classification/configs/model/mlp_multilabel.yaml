@@ -1,0 +1,129 @@
+# /home/free4ky/projects/chest-diseases/training/classification/runs/output/outputs_multibel/2025-09-26/13-07-45/27/logs/lightning_logs/version_0/checkpoints/vit_mlp-epoch=50-val_f1_macro=0.5806165337562561.ckpt
+# ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+# ┃        Test metric        ┃       DataLoader 0        ┃
+# ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+# │       test_accuracy       │    0.7711618542671204     │
+# │      test_aupr_macro      │    0.41629382967948914    │
+# │     test_auroc_macro      │    0.7807077169418335     │
+# │       test_f1_macro       │    0.4672936499118805     │
+# │         test_loss         │    1.2555603981018066     │
+# │      test_precision       │    0.3745829463005066     │
+# │        test_recall        │    0.6518479585647583     │
+# └───────────────────────────┴───────────────────────────┘
+# input_size: 512
+# batch_size: 2048
+# activation: gelu
+# dropout: 0.1
+# hidden_sizes:
+# - 1024
+# - 2048
+# - 1024
+# - 256
+# - 128
+# /home/free4ky/projects/chest-diseases/training/classification/runs/output/outputs_multibel/2025-09-26/13-30-30/4/logs/lightning_logs/version_0/checkpoints/vit_mlp-epoch=195-val_f1_macro=0.8323163986206055.ckpt
+# ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+# ┃        Test metric        ┃       DataLoader 0        ┃
+# ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+# │       test_accuracy       │    0.8094318509101868     │
+# │      test_aupr_macro      │    0.42116186022758484    │
+# │     test_auroc_macro      │    0.7511489987373352     │
+# │       test_f1_macro       │    0.42408132553100586    │
+# │         test_loss         │     3.889594554901123     │
+# │      test_precision       │    0.4115838408470154     │
+# │        test_recall        │    0.4432343542575836     │
+# └───────────────────────────┴───────────────────────────┘
+# input_size: 512
+# batch_size: 2048
+# activation: gelu
+# dropout: 0.1
+# hidden_sizes:
+# - 1024
+# - 2048
+# - 1024
+# - 256
+# - 128
+# /home/free4ky/projects/chest-diseases/training/classification/runs/output/outputs_multibel/2025-09-26/13-07-45/0/logs/lightning_logs/version_0/checkpoints/vit_mlp-epoch=12-val_f1_macro=0.43588829040527344.ckpt
+# ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+# ┃        Test metric        ┃       DataLoader 0        ┃
+# ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+# │       test_accuracy       │    0.6959782838821411     │
+# │      test_aupr_macro      │     0.382428377866745     │
+# │     test_auroc_macro      │    0.8030295372009277     │
+# │       test_f1_macro       │    0.4396854341030121     │
+# │         test_loss         │    0.8979299068450928     │
+# │      test_precision       │    0.3234483003616333     │
+# │        test_recall        │    0.7939789891242981     │
+# └───────────────────────────┴───────────────────────────┘
+# input_size: 512
+# batch_size: 2048
+# activation: relu
+# dropout: 0.3
+# hidden_sizes:
+# - 1024
+# - 2048
+# - 1024
+# - 256
+# - 128
+
+# /home/free4ky/projects/chest-diseases/training/classification/runs/output/outputs_multibel/2025-09-26/18-38-35/10/logs/lightning_logs/version_0/checkpoints/vit_mlp-epoch=12-val_f1_macro=0.44971513748168945.ckpt
+# ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+# ┃        Test metric        ┃       DataLoader 0        ┃
+# ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+# │       test_accuracy       │    0.7149856090545654     │
+# │      test_aupr_macro      │    0.39291128516197205    │
+# │     test_auroc_macro      │    0.8003414273262024     │
+# │       test_f1_macro       │    0.44971513748168945    │
+# │         test_loss         │    0.9266501069068909     │
+# │      test_precision       │    0.33805450797080994    │
+# │        test_recall        │    0.7591798305511475     │
+# └───────────────────────────┴───────────────────────────┘
+# input_size: 512
+# batch_size: 2048
+# activation: leaky_relu
+# dropout: 0.2
+# hidden_sizes:
+# - 256
+# - 128
+
+# /home/free4ky/projects/chest-diseases/training/classification/runs/output/outputs_multibel/2025-09-26/18-56-21/10/logs/lightning_logs/version_0/checkpoints/vit_mlp-epoch=10-val_f1_macro=0.4467194080352783.ckpt
+# ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+# ┃        Test metric        ┃       DataLoader 0        ┃
+# ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+# │       test_accuracy       │    0.6976061463356018     │
+# │      test_aupr_macro      │    0.3977214992046356     │
+# │     test_auroc_macro      │    0.7996273040771484     │
+# │       test_f1_macro       │    0.4467194080352783     │
+# │         test_loss         │    0.9409834146499634     │
+# │      test_precision       │    0.3352901041507721     │
+# │        test_recall        │    0.7704529166221619     │
+# └───────────────────────────┴───────────────────────────┘
+# input_size: 512
+# batch_size: 2048
+# activation: gelu
+# dropout: 0.1
+# hidden_sizes:
+# - 1024
+# - 512
+# - 256
+# - 128
+
+# /home/free4ky/projects/chest-diseases/training/classification/runs/output/outputs_multibel/2025-09-26/19-16-52/1/logs/lightning_logs/version_0/checkpoints/vit_mlp-epoch=49-val_f1_macro=0.45349034667015076.ckpt
+# ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+# ┃        Test metric        ┃       DataLoader 0        ┃
+# ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+# │       test_accuracy       │    0.7099106907844543     │
+# │      test_aupr_macro      │    0.3841947913169861     │
+# │     test_auroc_macro      │    0.8040277361869812     │
+# │       test_f1_macro       │    0.45349034667015076    │
+# │         test_loss         │    0.9136031866073608     │
+# │      test_precision       │    0.3420183062553406     │
+# │        test_recall        │    0.7776963114738464     │
+# └───────────────────────────┴───────────────────────────┘
+input_size: 512
+batch_size: 2048
+activation: leaky_relu
+dropout: 0.2
+hidden_sizes:
+- 512
+- 256
+- 128

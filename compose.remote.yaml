@@ -1,0 +1,67 @@
+services:
+
+  tritonserver:
+    image: borntowarn/porcupine-triton
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+      - "8002:8002"
+    shm_size: 2G
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+              device_ids: ['0']
+              driver: nvidia
+    profiles: ["base", "utils"]
+
+  rabbitmq:
+    image: rabbitmq:3.12-management
+    container_name: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    profiles: ["base", "utils"]
+
+  adapter:
+    image: borntowarn/porcupine-adapter
+    volumes:
+      - ./storage/:/storage/
+    environment:
+      - LOGURU_LEVEL=INFO
+      - TRITON_URL=tritonserver:8001
+      - RABBIT_URL=amqp://guest:guest@rabbitmq:5672/
+      - INPUT_TOPIC=input
+      - OUTPUT_TOPIC=frontend_output
+      - CONFIG_PATH=./configs/config.yaml
+    deploy:
+      replicas: 1
+    depends_on:
+      - rabbitmq
+      - tritonserver
+    profiles: ["base", "services"]
+
+  frontend:
+    image: borntowarn/porcupine-frontend
+    volumes:
+      - ./storage/:/storage
+    environment:
+      - LOGURU_LEVEL=INFO
+      - RABBIT_URL=amqp://guest:guest@rabbitmq:5672/
+      - INPUT_TOPIC=frontend_output
+      - OUTPUT_TOPIC=input
+      - CONFIG_PATH=./configs/config.yaml
+    depends_on:
+      - rabbitmq
+      - tritonserver
+    ports:
+      - "7860:7860"
+    profiles: ["base", "services"]
+
+networks:
+  default:
+    name: chest

@@ -1,0 +1,2 @@
+_target_: src.utils.FocalLoss
+gamma: 0.774384985433772

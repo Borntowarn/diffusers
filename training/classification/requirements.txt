@@ -1,0 +1,4 @@
+torcheval
+hydra-core
+seaborn
+torchmetrics

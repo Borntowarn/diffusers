@@ -1,0 +1,16 @@
+defaults:
+  # - override hydra/sweeper/sampler: tpe
+  - optimizer: adam
+  - scheduler: cyclic
+  - loss: FocalLoss
+  - dataset: tensor_lipro_all
+  - model: mlp_binary
+  - _self_
+
+max_epochs: 100
+optimized_metric: "val_f1"
+save_dir: ${hydra:runtime.output_dir}/logs
+oversample: true
+dataset_boost:
+  0: 1.0   # dataset 0 = normal
+  1: 5.0

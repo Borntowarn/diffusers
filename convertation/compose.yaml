@@ -1,0 +1,21 @@
+version: '3.5'
+
+services:
+  convertation:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["/bin/bash"]
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./vit/:/app/vit
+      - ./head/:/app/head
+      - ../training/weights/:/weights
+    deploy:                              # Разрешение на использование GPU
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+              device_ids: ['0']
+              driver: nvidia

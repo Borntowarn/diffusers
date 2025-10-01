@@ -1,0 +1,227 @@
+# /home/free4ky/projects/chest-diseases/training/classification/runs/logs/tb_logs_binary_oversample/lightning_logs/version_5/checkpoints/vit_mlp-epoch=93-val_f1=0.983160138130188.ckpt
+# CTRATE METRICS
+# ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+# ┃        Test metric        ┃       DataLoader 0        ┃
+# ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+# │       test_accuracy       │    0.8644291162490845     │
+# │          test_f1          │     0.92549729347229      │
+# │      test_precision       │    0.9020091891288757     │
+# │        test_recall        │    0.9502413868904114     │
+# └───────────────────────────┴───────────────────────────┘
+# MOSMED METRICS
+# ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+# ┃        Test metric        ┃       DataLoader 0        ┃
+# ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+# │       test_accuracy       │    0.7872340679168701     │
+# │          test_f1          │    0.8765432238578796     │
+# │      test_precision       │    0.7977527976036072     │
+# │        test_recall        │    0.9726027250289917     │
+# └───────────────────────────┴───────────────────────────┘
+# input_size: 512
+# batch_size: 2048
+# activation: leaky_relu
+# dropout: 0.1
+# hidden_sizes:
+# - 1024
+# - 2048
+# - 1024
+# - 256
+# - 128
+
+# /home/free4ky/projects/chest-diseases/training/classification/runs/output/outputs_binary_ctrate_mosmed/2025-09-26/19-44-22/14/logs/lightning_logs/version_0/checkpoints/vit_mlp-epoch=49-val_f1=0.9046242833137512.ckpt
+# CTRATE METRICS  
+# ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+# ┃        Test metric        ┃       DataLoader 0        ┃
+# ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+# │       test_accuracy       │    0.8861467838287354     │
+# │          test_f1          │    0.9396371245384216     │
+# │      test_precision       │    0.8861467838287354     │
+# │        test_recall        │            1.0            │
+# └───────────────────────────┴───────────────────────────┘
+# MOSMED METRICS
+# ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+# ┃        Test metric        ┃       DataLoader 0        ┃
+# ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+# │       test_accuracy       │    0.7765957713127136     │
+# │          test_f1          │    0.8742514848709106     │
+# │      test_precision       │    0.7765957713127136     │
+# │        test_recall        │            1.0            │
+# └───────────────────────────┴───────────────────────────┘
+# input_size: 512
+# batch_size: 2048
+# activation: gelu
+# dropout: 0.1
+# hidden_sizes:
+# - 1024
+# - 2048
+# - 1024
+# - 256
+# - 128
+
+# /home/free4ky/projects/chest-diseases/training/classification/runs/output/outputs_binary_ctrate_mosmed/2025-09-26/20-04-11/11/logs/lightning_logs/version_0/checkpoints/vit_mlp-epoch=05-val_f1=0.8788679242134094.ckpt
+# CTRATE METRICS
+# ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+# ┃        Test metric        ┃       DataLoader 0        ┃
+# ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+# │       test_accuracy       │    0.8216518759727478     │
+# │          test_f1          │    0.9005139470100403     │
+# │      test_precision       │    0.8903810977935791     │
+# │        test_recall        │    0.9108800888061523     │
+# └───────────────────────────┴───────────────────────────┘
+# MOSMED METRICS
+# ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+# ┃        Test metric        ┃       DataLoader 0        ┃
+# ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+# │       test_accuracy       │     0.542553186416626     │
+# │          test_f1          │    0.6906474828720093     │
+# │      test_precision       │    0.7272727489471436     │
+# │        test_recall        │    0.6575342416763306     │
+# └───────────────────────────┴───────────────────────────┘
+# input_size: 512
+# batch_size: 2048
+# activation: leaky_relu
+# dropout: 0.1
+# hidden_sizes:
+# - 1024
+# - 2048
+# - 1024
+# - 256
+# - 128
+
+#/home/free4ky/projects/chest-diseases/training/classification/runs/output/outputs_binary_ctrate_mosmed/2025-09-25/20-26-23/18/logs/lightning_logs/version_0/checkpoints/vit_mlp-epoch=99-val_f1=0.9795153737068176.ckpt
+# MOSMED METRICS
+# ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+# ┃        Test metric        ┃       DataLoader 0        ┃
+# ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+# │       test_accuracy       │    0.7765957713127136     │
+# │          test_f1          │    0.8742514848709106     │
+# │      test_precision       │    0.7765957713127136     │
+# │        test_recall        │            1.0            │
+# └───────────────────────────┴───────────────────────────┘
+# CTRATE
+# ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+# ┃        Test metric        ┃       DataLoader 0        ┃
+# ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+# │       test_accuracy       │    0.8861467838287354     │
+# │          test_f1          │    0.9396371245384216     │
+# │      test_precision       │    0.8861467838287354     │
+# │        test_recall        │            1.0            │
+# └───────────────────────────┴───────────────────────────┘
+# input_size: 512
+# batch_size: 2048
+# activation: gelu
+# dropout: 0.1
+# hidden_sizes:
+# - 1024
+# - 2048
+# - 1024
+# - 256
+# - 128
+
+# /home/free4ky/projects/chest-diseases/training/classification/runs/output/outputs_binary_ctrate_mosmed/2025-09-26/20-53-49/9/logs/lightning_logs/version_0/checkpoints/vit_mlp-epoch=17-val_f1=0.8754298686981201.ckpt
+# CTRATE
+# ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+# ┃        Test metric        ┃       DataLoader 0        ┃
+# ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+# │       test_accuracy       │    0.7133925557136536     │
+# │          test_f1          │    0.8161283731460571     │
+# │      test_precision       │    0.9456947445869446     │
+# │        test_recall        │    0.7177868485450745     │
+# └───────────────────────────┴───────────────────────────┘
+# MOSMED
+# ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+# ┃        Test metric        ┃       DataLoader 0        ┃
+# ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━┩
+# │       test_accuracy       │            0.5            │
+# │          test_f1          │    0.5346534848213196     │
+# │      test_precision       │    0.9642857313156128     │
+# │        test_recall        │    0.36986300349235535    │
+# └───────────────────────────┴───────────────────────────┘
+# input_size: 512
+# batch_size: 2048
+# activation: leaky_relu
+# dropout: 0.3
+# hidden_sizes:
+# - 1024
+# - 2048
+# - 1024
+# - 256
+# - 128
+
+#/home/free4ky/projects/chest-diseases/training/classification/runs/output/outputs_binary_ctrate_mosmed/2025-09-29/10-34-57/3/logs/lightning_logs/version_0/checkpoints/vit_mlp-epoch=05-val_f1=0.8776922821998596.ckpt
+# CTRATE
+#      Metric     Mean    Lower    Upper
+#       AUROC 0.790420 0.767147 0.812532
+#       AUPRC 0.963279 0.955131 0.970288
+#   Precision 0.940176 0.930989 0.949496
+#          F1 0.878630 0.868781 0.887852
+# Sensitivity 0.824685 0.810218 0.838976
+# Specificity 0.590039 0.541167 0.641346
+
+# MOSMED
+#      Metric     Mean    Lower    Upper
+#       AUROC 0.721161 0.598127 0.833640
+#       AUPRC 0.899257 0.822410 0.956057
+#   Precision 0.860586 0.776083 0.932455
+#          F1 0.846828 0.776096 0.904142 
+# Sensitivity 0.835307 0.746479 0.914316
+# Specificity 0.527890 0.300000 0.750000
+
+input_size: 512
+batch_size: 2048
+activation: gelu
+dropout: 0.2
+hidden_sizes:
+- 256
+- 128
+
+# /home/free4ky/projects/chest-diseases/training/classification/runs/output/outputs_binary_ctrate_mosmed/2025-09-29/10-47-17/17/logs/lightning_logs/version_0/checkpoints/vit_mlp-epoch=15-val_f1=0.8668084144592285.ckpt
+# CTRATE
+#      Metric     Mean    Lower    Upper
+#       AUROC 0.760348 0.735251 0.785099
+#       AUPRC 0.953654 0.943434 0.962439
+#   Precision 0.933173 0.922744 0.942568
+#          F1 0.867872 0.858120 0.877963
+# Sensitivity 0.811151 0.796823 0.825613
+# Specificity 0.546131 0.493074 0.600000
+# MOSMED
+#      Metric     Mean    Lower    Upper
+#       AUROC 0.788287 0.661337 0.898649
+#       AUPRC 0.917254 0.838152 0.972037
+#   Precision 0.880305 0.793103 0.954545
+#          F1 0.834712 0.765625 0.897974
+# Sensitivity 0.795488 0.701299 0.887324
+# Specificity 0.622421 0.399821 0.846250
+
+# input_size: 512
+# batch_size: 2048
+# activation: relu
+# dropout: 0.2
+# hidden_sizes:
+# - 1024
+# - 1024
+# - 512
+# - 256
+
+# /home/free4ky/projects/chest-diseases/training/classification/runs/output/outputs_binary_ctrate_mosmed/2025-09-29/11-09-22/11/logs/lightning_logs/version_0/checkpoints/vit_mlp-epoch=13-val_f1=0.7607603073120117.ckpt
+# CTRATE
+#      Metric     Mean    Lower    Upper
+#       AUROC 0.791177 0.769008 0.813707
+#       AUPRC 0.966101 0.959170 0.972133
+#   Precision 0.962906 0.953726 0.971320
+#          F1 0.763203 0.748969 0.777877
+# Sensitivity 0.632162 0.614191 0.651690
+# Specificity 0.809726 0.767120 0.852303
+# MOSMED
+#      Metric     Mean    Lower    Upper
+#       AUROC 0.753927 0.630888 0.872039
+#       AUPRC 0.908969 0.835134 0.966573
+#   Precision 0.904554 0.804348 0.978284
+#          F1 0.660565 0.550423 0.761083
+# Sensitivity 0.522919 0.400000 0.644758
+# Specificity 0.807296 0.611051 0.956522
+# input_size: 512
+# batch_size: 2048
+# activation: gelu
+# dropout: 0.1
+# hidden_sizes: []

@@ -1,0 +1,12 @@
+defaults:
+  # - override hydra/sweeper/sampler: tpe
+  - optimizer: adam
+  - scheduler: cyclic
+  - dataset: tensor_lipro_all
+  - model: mlp_multilabel
+  - _self_
+
+max_epochs: 100
+optimized_metric: "val_f1_macro"
+save_dir: ${hydra:runtime.output_dir}/logs
+oversample: false

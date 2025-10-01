@@ -1,0 +1,21 @@
+FROM python:3.11
+
+WORKDIR /training
+
+COPY ./training/CT-CLIP ./CT-CLIP
+COPY ./training/requirements.txt ./requirements.txt
+RUN pip3 install -r requirements.txt
+
+
+COPY ./training/weights/bpr ./weights/bpr
+COPY ./training/weights/CT-RATE/ProjectionVIT_LiPro_V2.pt ./weights/CT-RATE/ProjectionVIT_LiPro_V2.pt
+COPY ./training/weights/CT-RATE/model_binary.pth ./weights/CT-RATE/model_binary.pth
+COPY ./training/weights/CT-RATE/model_multilabel.pth ./weights/CT-RATE/model_multilabel.pth
+
+COPY ./training/bpreg ./bpreg
+COPY ./training/src ./src
+COPY ./training/inference.py ./inference.py
+
+ENV LOGURU_COLORIZE "true"
+
+CMD ["python", "inference.py"]

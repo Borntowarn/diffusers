@@ -1,0 +1,25 @@
+train:
+  embeds:
+    - /home/free4ky/projects/chest-diseases/data/preprocessed_train_20/train_data.pt
+    - /home/free4ky/projects/chest-diseases/data/preprocessed_train_20/val_data.pt
+    - /home/free4ky/projects/chest-diseases/data/preprocessed_mosmed/train_data.pt
+    - /home/free4ky/projects/chest-diseases/data/preprocessed_mosmed/val_data.pt
+  labels:
+    - /home/free4ky/projects/chest-diseases/data/preprocessed_train_20/train_labels.pt
+    - /home/free4ky/projects/chest-diseases/data/preprocessed_train_20/val_labels.pt
+    - /home/free4ky/projects/chest-diseases/data/preprocessed_mosmed/train_labels.pt
+    - /home/free4ky/projects/chest-diseases/data/preprocessed_mosmed/val_labels.pt
+val:
+  embeds:
+    - /home/free4ky/projects/chest-diseases/data/preprocessed_mosmed/test_data.pt
+    - /home/free4ky/projects/chest-diseases/data/preprocessed_val_20/validation_data.pt
+  labels:
+    - /home/free4ky/projects/chest-diseases/data/preprocessed_mosmed/test_labels.pt
+    - /home/free4ky/projects/chest-diseases/data/preprocessed_val_20/validation_labels.pt
+test:
+  embeds:
+    - /home/free4ky/projects/chest-diseases/data/preprocessed_mosmed/test_data.pt
+    - /home/free4ky/projects/chest-diseases/data/preprocessed_val_20/validation_data.pt
+  labels:
+    - /home/free4ky/projects/chest-diseases/data/preprocessed_mosmed/test_labels.pt
+    - /home/free4ky/projects/chest-diseases/data/preprocessed_val_20/validation_labels.pt
