@@ -1,43 +1,114 @@
-## Модели и веса: загрузка, обновление, конвертация
+# Модели и веса: загрузка, обновление, конвертация
 
 В проекте модели разворачиваются через NVIDIA Triton Inference Server. Готовые артефакты (ONNX или TensorRT plan) кладутся в `model_repository_running/`.
 
-### Где хранить модели
-- `model_repository_running/` — распакованные модели, готовые к запуску Triton
-- `storage/` — можно использовать для хранения промежуточных артефактов и весов тренинга
+### 1. Заранее подготовленные образы 
+Готовые образы уже содержат все необходимые модели и могут быть использованы для запуска Triton и всех сервисов без дополнительных действий.
 
-### Загрузка готовых моделей
-Если образы приходят с уже включёнными моделями, ничего делать не нужно. Если вы хотите подменить модели:
-1. Остановите стек
-2. Замените содержимое `model_repository_running/<model_name>` на новую версию
-3. Запустите стек снова
+Аналогично и инференс - заранее подготовленный образ уже содержит все необходимые веса для простого запуска инференса.
 
-### Добавление новой модели
-1. Подготовьте `1/` с `model.onnx` или `model.plan`
-2. Создайте корректный `config.pbtxt`
-3. Поместите директорию модели в `model_repository_running/`
-4. Перезапустите Triton/стек
 
-### Конвертация PyTorch → ONNX → TensorRT
-См. подробности в [training.md](./training.md). Коротко:
-```bash
-# Экспорт в ONNX
-python convertation/<model_family>/torch2onnx.py --weights best.pth --output model.onnx
+### 2. Для локального развертывания Triton
 
-# Проверка ONNX
-python convertation/<model_family>/test_onnx.py --onnx model.onnx
+1. Скачайте `model_repository_running.zip` из [Яндекс.Диска](https://disk.yandex.ru/d/nq0x0-Ivx93VJw)
 
-# Конвертация в TensorRT внутри контейнера
-cd convertation && sh run.sh
-cd <model_family> && sh convert2trt.sh /abs/path/model.onnx /abs/path/model.plan
+2. Распакуйте архив в директорию чтобы в корне проекта появилась директория `model_repository_running` со следующей структурой:
+```
+...
+├── convertation
+├── model_repository_running
+│   ├── binary_onnx
+│   │   ├── 1
+│   │   │   └── model.onnx
+│   │   └── config.pbtxt
+│   ├── bpr_model
+│   │   ├── 1
+│   │   │   ├── bpreg
+│   │   │   ├── model.py
+│   │   │   ├── requirements.txt
+│   │   │   └── weights
+│   │   └── config.pbtxt
+│   ├── multilabel_onnx
+│   │   ├── 1
+│   │   │   └── model.onnx
+│   │   └── config.pbtxt
+│   └── vit_onnx
+│       ├── 1
+│       │   └── model.onnx
+│       └── config.pbtxt
+├── services
+...
 ```
 
-### Версионирование моделей
-Triton поддерживает версионирование через поддиректории `1/`, `2/`, `3/` и т. д. Вы можете хранить несколько версий и указывать активную через конфиг или путь.
+3. Ваш репозиторий моделей готов к запуску Triton.
 
-### Рекомендации по `config.pbtxt`
-- Укажите `platform` в зависимости от артефакта: `onnxruntime_onnx` или `tensorrt_plan`
-- Настройте `max_batch_size` и `dynamic_batching` под ваш сценарий
-- Для GPU добавьте `instance_group [ { kind: KIND_GPU } ]`
+### 3. Для разработки
+Для скачивания исходных `.pt` моделей необходимо подготовить окружение в соответствии с [гайдом разработчика](./development.md) и запустить скрипт для скачивания исходных моделей:
+```bash
+cd training
+python download_models.py
+```
+
+Также можно скачать папку `initial_weights.zip` с исходными моделями и весами в директорию `training/weights` из [Яндекс.Диска](https://disk.yandex.ru/d/nq0x0-Ivx93VJw) чтобы получилась следующая структура:
+```
+training
+│   └── weights
+│       ├── CT-RATE
+│       │   ├── ClassifierHead_LiPro_V2.pt
+│       │   ├── ProjectionVIT_Base_V2.pt
+│       │   ├── ProjectionVIT_LiPro_V2.pt
+│       │   ├── ProjectionVIT_VocabFine_V2.pt
+│       │   ├── model_binary.pth
+│       │   ├── model_multilabel.pth
+│       │   └── models
+│       ├── Vista3D
+│       │   ├── image_encoder.pt
+│       │   └── model.pt
+│       ├── bpr
+│       │   ├── config.json
+│       │   ├── inference-settings.json
+│       │   ├── model.pt
+│       │   └── reference.xlsx
+│       └── faiss_database
+│           ├── all
+│           └── train
+```
 
 
+### 4. Конвертация PyTorch → ONNX
+1. Скачайте исходные `.pt` модели в директорию `training/weights` (по умолчанию)
+2. Перейдите в директорию `convertation`:
+```bash
+cd convertation
+```
+3. Выберите модель для конвертации в ONNX:
+```bash
+cd vit
+ИЛИ
+cd head
+```
+4. Запустите скрипт для конвертации в ONNX:
+```bash
+python torch2onnx.py
+```
+
+### 5. Конвертация ONNX → TensorRT
+1. Скачайте исходные `.pt` модели в директорию `training/weights` (по умолчанию)
+2. Перейдите в директорию `convertation`:
+```bash
+cd convertation
+```
+3. Запустите контейнер для конвертации, который содержит утилиту `trtexec`:
+```bash
+sh run.sh
+```
+4. Внутри контейнера для конкретной модели:
+```bash
+cd vit
+ИЛИ
+cd head
+```
+4. Запустите скрипт для конвертации в TensorRT:
+```bash
+sh convert2trt.sh
+```

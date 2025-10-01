@@ -56,7 +56,7 @@ def export_onnx(model, x, name):
     onnx_model.optimize()
     onnx_model.save(name)
 
-CT_RATE_WEIGHTS_DIR = Path("/home/borntowarn/projects/chest-diseases/training/weights/CT-RATE")
+CT_RATE_WEIGHTS_DIR = Path("../../training/weights/CT-RATE")
 
 if __name__ == "__main__":
     with torch.no_grad():
