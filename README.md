@@ -13,8 +13,10 @@
 <img alt="Титул ридми" src="assets/titul.jpg" style="display:block; width:100%; height:auto; margin:0 auto;">
 
 ## *Состав команды "Диффузоры"*
-1. Козлов Михаил (tg: @borntowarn) - MLE/MLOps
-2. Карпов Даниил (tg: @Free4ky) - MLE/MLOps
+1. Козлов Михаил ([Telegram](https://t.me/borntowarn)) - MLE/MLOps
+2. Карпов Даниил ([Telegram](https://t.me/Free4ky)) - MLE/MLOps
+
+❗ По экстренным вопросам при неработоспособности сервиса или вопросам по развертыванию можно обращаться напрямую к нам в телеграм. ❗
 
 ## Оглавление
 1. [Задание](#1)
@@ -164,10 +166,11 @@
 - Для развертывания сервиса - 12GB
 
 
-## <a name="7">Развертывание и тестирование</a>
+## <a name="7">Развертывание и тестирование. Подробная документация [здесь](./docs/README.md)</a>
 
 ### Предварительные требования
-- Linux (проверено в WSL2), `Docker 24+`, `Docker Compose v2`.
+- Желательно Linux, однако проверено на Windows и Windows+WSL2.
+- `Docker 24+`, `Docker Compose v2`.
 - NVIDIA драйвер и `NVIDIA Container Toolkit`.
 
 Проверка GPU:
@@ -175,71 +178,73 @@
 nvidia-smi
 ```
 
-### Быстрый старт (готовые контейнеры)
-1) Опционально установите `LOGURU_LEVEL`.
-2) Запустите стек:
+### Быстрый старт для развертывания. Подробная документация [здесь](./docs/start_services.md)
+1. Запустите стек:
 ```bash
-bash ./start.sh
+bash ./start.remote.sh
 ```
-3) Откройте интерфейс: `http://localhost:7860`
-4) Остановите стек:
+2. Откройте интерфейс: `http://localhost:7860`
+3. Остановите стек:
 ```bash
-bash ./stop.sh
+bash ./stop.remote.sh
 ```
 
 Открытые порты:
 - Triton: `8000` (HTTP), `8001` (gRPC), `8002` (Metrics)
-- RabbitMQ: `5672` (AMQP), `15672` (Management UI)
+- RabbitMQ: `5672` (AMQP), `15672` (Management UI, логин/пароль: `guest/guest`)
 - Frontend (Gradio): `7860`
 
-### Локальный инференс по архивам
-Подготовьте входную папку:
-```
-YOUR_INPUT_FOLDER_WITH_ZIPS/
-  study_id_1.zip
-  study_id_2.zip
-  ...
-  final_archive.zip
+### Быстрый старт для инференса. Подробная документация [здесь](./docs/inference.md#1-быстрый-старт-из-заранее-подготовленных-образов-предпочтительный-вариант)
+
+1. Внутри файла `inference.remote.sh` необходимо заменить переменную `YOUR_INPUT_FOLDER_WITH_ZIPS` на абсолютный путь к папке с архивами. Таким образом ваш скрипт для развертывания решения будет выглядеть следующим образом:
+```bash
+#!/bin/bash
+
+# Путь к входным данным в папке (рекомендуется указать АБСОЛЮТНЫЙ путь)
+# Папка с zip-файлами должна иметь структуру вида:
+# YOUR_INPUT_FOLDER_WITH_ZIPS/
+#   study_id_1.zip
+#   study_id_2.zip
+#   ...
+#   final_archive.zip
+# НАПРИМЕР: YOUR_INPUT_FOLDER_WITH_ZIPS="/home/borntowarn/projects/chest-diseases/input"
+YOUR_INPUT_FOLDER_WITH_ZIPS="ВАШ ПУТЬ К ПАПКЕ С АРХИВАМИ"
+YOUR_OUTPUT_FOLDER="./output"
+
+docker run \
+    -it \
+    --gpus "all" \
+    -e INPUT_FOLDER="./input" \
+    -v "$YOUR_INPUT_FOLDER_WITH_ZIPS":/training/input \
+    -v "$YOUR_OUTPUT_FOLDER":/training/output \
+    borntowarn/porcupine-inference
 ```
 
-Запуск из Docker Hub:
+-  Папки `INPUT_FOLDER="./input"` - внутренняя папка, в которую будут монтироваться входные данные из папки `YOUR_INPUT_FOLDER_WITH_ZIPS`
+-  Папка `YOUR_OUTPUT_FOLDER` - папка, в которую будут сохраняться результаты инференса: файлы `output.xlsx` и `warnings_and_errors.txt`. Она автоматически примонтируется в локальной файловой системе и будет доступна.
+
+2. Запустить скрипт:
 ```bash
 bash ./inference.remote.sh
 ```
 
-Локальная сборка и запуск:
-```bash
-bash ./inference.local.sh
-```
-
-Переменные в скриптах:
-- `YOUR_INPUT_FOLDER_WITH_ZIPS` — абсолютный путь к данным
-- `YOUR_OUTPUT_FOLDER` — папка результатов (по умолчанию `./output`)
 
 ### Локальная сборка образов и запуск стека
 ```bash
 docker compose -f compose.local.yaml --profile base up -d --build
-```
-
-Остановка и очистка:
-```bash
 docker compose -f compose.local.yaml --profile base down
-```
-
-Проверка логов:
-```bash
-docker compose -f compose.local.yaml logs -f tritonserver | cat
-docker compose -f compose.local.yaml logs -f adapter | cat
-docker compose -f compose.local.yaml logs -f frontend | cat
+docker compose -f compose.local.yaml logs -f tritonserver
+docker compose -f compose.local.yaml logs -f adapter
+docker compose -f compose.local.yaml logs -f frontend
 ```
 
 Основные переменные окружения:
-- `TRITON_URL` — например, `tritonserver:8001`
-- `RABBIT_URL` — `amqp://user:pass@rabbitmq:5672/`
-- `INPUT_TOPIC` / `OUTPUT_TOPIC`
-- `CONFIG_PATH` — путь к `./configs/config.yaml`
+- `TRITON_URL` — grpc ручка, `tritonserver:8001`
+- `RABBIT_URL` — amqp ручка, `amqp://guest:guest@rabbitmq:5672/`
+- `INPUT_TOPIC` / `OUTPUT_TOPIC` - топики для обмена сообщениями между компонентами
+- `CONFIG_PATH` — путь к `./configs/config.yaml` для `frontend` и `adapter`
 
-## <a name="7">Структура проекта</a>
+## <a name="8">Структура проекта</a>
 
 ```
 .                                   # Корневая директория проекта
@@ -258,6 +263,12 @@ docker compose -f compose.local.yaml logs -f frontend | cat
 │   ├── README.md                   # Документация по использованию конвертации
 │   ├── compose.yaml                # Docker Compose файл для запуска конвертации в контейнере
 │   └── run.sh                      # Скрипт для запуска контейнера конвертации
+├── docs                            # Папка с документацией
+│   ├── README.md                   # Основной файл с документацией по проекту
+│   ├── development.md              # Документация по разработке
+│   ├── inference.md                # Документация по инференсу для внутреннего тестирования
+│   ├── models.md                   # Документация по моделям
+│   └── start_services.md           # Документация по запуску сервисов для развертывания
 ├── model_repository_running        # Папка с готовыми моделями для Triton Inference Server (тут должны быть распакованные модели для локальной сборки)
 ├── services                        # Каталог с микросервисами проекта
 │   ├── adapter                     # Сервис-адаптер для взаимодействия между компонентами
@@ -289,15 +300,9 @@ docker compose -f compose.local.yaml logs -f frontend | cat
 ├── start.remote.sh                 # Загрузка подготовленных образов и запуск сервисов группы base (tritonserver, rabbitmq, adapter, frontend)
 ├── stop.local.sh                   # Остановка сервисов группы base запущенных локально (tritonserver, rabbitmq, adapter, frontend)
 └── stop.remote.sh                  # Остановка сервисов группы base запущенных из Docker Hub (tritonserver, rabbitmq, adapter, frontend)
-```            
-
-Ключевые файлы:
-- `compose.local.yaml` — сервисы `tritonserver`, `rabbitmq`, `adapter`, `frontend` (профили: `base`, `utils`).
-- `Dockerfile.triton.yaml` — сборка Triton и копирование `model_repository_running`.
-- `Dockerfile.inference.yaml` — одиночный инференс для папки архивов.
-- `services/adapter/Dockerfile` — адаптер (`TRITON_URL`, `RABBIT_URL`, `CONFIG_PATH`).
-- `services/frontend/Dockerfile` — фронтенд (`RABBIT_URL`, `CONFIG_PATH`).
+```
 
 ## <a name="8">Ссылки</a>
-- RabbitMQ UI: `http://localhost:15672` (`guest/guest`)
-- Frontend (Gradio): `http://localhost:7860`
+- Яндекс диск со всеми материалами, весами, презентацией: [здесь](https://disk.yandex.ru/d/nq0x0-Ivx93VJw)
+- Для связи 1: https://t.me/borntowarn
+- Для связи 2: https://t.me/Free4ky
