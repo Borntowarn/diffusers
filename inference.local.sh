@@ -25,6 +25,9 @@ YOUR_OUTPUT_FOLDER="/$PWD/output"
 
 docker build -t inference -f ./Dockerfile.inference.yaml .
 
+echo "ВАШ ПУТЬ К ПАПКЕ С АРХИВАМИ: $YOUR_INPUT_FOLDER_WITH_ZIPS"
+echo "ВАШ ПУТЬ К ПАПКЕ С РЕЗУЛЬТАТАМИ: $YOUR_OUTPUT_FOLDER"
+
 docker run \
     -it \
     --gpus "all" \

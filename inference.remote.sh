@@ -23,6 +23,9 @@
 YOUR_INPUT_FOLDER_WITH_ZIPS="/home/borntowarn/projects/chest-diseases/input"
 YOUR_OUTPUT_FOLDER="/$PWD/output"
 
+echo "ВАШ ПУТЬ К ПАПКЕ С АРХИВАМИ: $YOUR_INPUT_FOLDER_WITH_ZIPS"
+echo "ВАШ ПУТЬ К ПАПКЕ С РЕЗУЛЬТАТАМИ: $YOUR_OUTPUT_FOLDER"
+
 docker run \
     -it \
     --gpus "all" \

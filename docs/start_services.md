@@ -24,7 +24,7 @@ sh ./stop.remote.sh
 ### 2. Локальная сборка образов и запуск сервисов
 
 Для того, чтобы запустить сервисы локально, необходимо
-1. Подготовить репозиторий с моделями и весами для запуска TritonServer [гайду](./models.md) (пункт 2).
+1. Подготовить репозиторий с моделями и весами для запуска TritonServer [гайду](./models.md#2-для-локального-развертывания-triton).
 
 ⚠️ Структура `model_repository_running` должна совпадать с образцом ниже, иначе Triton не поднимет модели.
 
@@ -66,3 +66,9 @@ sh ./stop.remote.sh
 ```bash
 sh ./stop.local.sh
 ```
+
+Основные переменные окружения:
+- `TRITON_URL` — grpc ручка, `tritonserver:8001`
+- `RABBIT_URL` — amqp ручка, `amqp://guest:guest@rabbitmq:5672/`
+- `INPUT_TOPIC` / `OUTPUT_TOPIC` - топики для обмена сообщениями между компонентами
+- `CONFIG_PATH` — путь к `./configs/config.yaml` для `frontend` и `adapter`

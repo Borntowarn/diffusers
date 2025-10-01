@@ -247,22 +247,8 @@ bash ./stop.remote.sh
 - Frontend (Gradio): `7860`
 
 ℹ️ Если порты заняты, остановите конфликтующие сервисы или измените порт-маппинг в compose.
+ℹ️ Не забудьте прокинуть порты на хост машину, если вы работаете через SSH (VS Code server, PyCharm)
 
-
-### Локальная сборка образов и запуск стека
-```bash
-docker compose -f compose.local.yaml --profile base up -d --build
-docker compose -f compose.local.yaml --profile base down
-docker compose -f compose.local.yaml logs -f tritonserver
-docker compose -f compose.local.yaml logs -f adapter
-docker compose -f compose.local.yaml logs -f frontend
-```
-
-Основные переменные окружения:
-- `TRITON_URL` — grpc ручка, `tritonserver:8001`
-- `RABBIT_URL` — amqp ручка, `amqp://guest:guest@rabbitmq:5672/`
-- `INPUT_TOPIC` / `OUTPUT_TOPIC` - топики для обмена сообщениями между компонентами
-- `CONFIG_PATH` — путь к `./configs/config.yaml` для `frontend` и `adapter`
 
 ## <a name="8">Структура проекта</a>
 
