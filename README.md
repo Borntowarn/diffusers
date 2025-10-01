@@ -10,7 +10,7 @@
 
 ---
 
-<img width="600" alt="Титул ридми" src="assets/titul.jpg">
+<img alt="Титул ридми" src="assets/titul.jpg" style="display:block; width:100%; height:auto; margin:0 auto;">
 
 ## *Состав команды "Диффузоры"*
 1. Козлов Михаил (tg: @borntowarn) - MLE/MLOps
@@ -55,7 +55,7 @@
 4. *Triton Inference Server* — это открытое программное обеспечение, которое упрощает развертывание, запуск и масштабирование AI-моделей для быстрого выполнения на CPU или GPU. Модели в нем можно горизонтально масштабировать (за счет копий), для увеличения пропускной способности.
 
 <p align="center">
-<img width="600" alt="" src="assets/architecture_scheme.jpg">
+<img alt="" src="assets/architecture_scheme.jpg" style="display:block; width:100%; height:auto; margin:0 auto;">
 </p>
 
 ---
@@ -69,7 +69,7 @@
 2. *Многослойный перцептрон* - обучен на **2 класса** (без патологии, с патологией). Для решения проблемы дисбаланса классов использовались функция потерь **FocalLoss** и балансировка семплов через **WeightedRandomSampler**. Кол-во слоев подобрано optuna оптимизацией.
 
 <p align="center">
-<img width="600" alt="Архитектура сервиса" src="assets/binary_model.jpg">
+<img alt="Архитектура сервиса" src="assets/binary_model.jpg" style="display:block; width:100%; height:auto; margin:0 auto;">
 </p>
 
 ---
@@ -82,7 +82,7 @@
 2. *Многослойный перцептрон* - обучен на 20 классов в парадигме мультилейбл классификации (на одном КТ могут быть сразу несколько патологий). Функция потерь Weighted BCE. Кол-во слоев подобрано optuna оптимизацией.
 
 <p align="center">
-<img width="600" alt="" src="assets/multilabel_arch.jpg">
+<img alt="" src="assets/multilabel_arch.jpg" style="display:block; width:100%; height:auto; margin:0 auto;">
 </p>
 
 ---
