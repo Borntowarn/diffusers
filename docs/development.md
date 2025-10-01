@@ -34,34 +34,25 @@ conda activate ./venv
 pip install -r requirements.txt
 ```
 
+ℹ️ Рекомендуется отдельное окружение `conda`/`venv`, чтобы избежать конфликтов зависимостей.
+
 4. Далее необходимо установить дополнительные модули как зависимости для запуска моделей:
 ```bash
 pip install -e training/CT-CLIP/CT_CLIP
 pip install -e training/CT-CLIP/transformer_maskgit
 ```
 
-5. На данный момент создан токен для скачивания исходных моделей и данных с huggingface, однако он истекает через 30 дней. 
-
-Для продолжения работы необходимо создать новый токен и авторизоваться в исходном репозитории модели https://huggingface.co/datasets/ibrahimhamamci/CT-RATE, который используется для скачивания данных и заменить токен в файле `training/.env` на новый.
-```bash
-HF_TOKEN=your_huggingface_token
-```
-Для скачивания исходных моделей и данных необходимо указать имя в репозитории модели: https://huggingface.co/datasets/ibrahimhamamci/CT-RATE
-
-6. Далее необходимо установить дополнительные модули как зависимости для запуска моделей:
-```bash
-pip install -e training/CT-CLIP/CT_CLIP
-pip install -e training/CT-CLIP/transformer_maskgit
-```
-
-7. Если вы хотите запускать ноутбуки для различных тестов, то необходимо установить ipykernel в venv:
+5. Если вы хотите запускать ноутбуки для различных тестов, то необходимо установить ipykernel в venv:
 ```bash
 pip install ipykernel
 ```
 
-8. Ваше основное окружение для проекта готово, теперь можно приступать к работе.
+6. Ваше основное окружение для проекта готово, теперь можно приступать к работе.
 
-9. Если вы хотите запускать обучение MLP модели, то необходимо установить дополнительный `requirements.txt` в директории `training/classification`:
+7. Если вы хотите запускать обучение MLP модели, то необходимо установить дополнительный `requirements.txt` в директории `training/classification`:
 ```bash
 pip install -r requirements.txt
 ```
+
+8. Для загрузки исходных весов скачайте папку `initial_weights.zip` с исходными моделями и весами в директорию `training/weights` из [Яндекс.Диска](https://disk.yandex.ru/d/nq0x0-Ivx93VJw). Подробнее в [гайде](./models.md#3-для-разработки)
+
