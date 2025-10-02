@@ -1,7 +1,7 @@
 services:
 
   tritonserver:
-    image: borntowarn/porcupine-triton
+    image: borntowarn/porcupine-tritonserver
     ports:
       - "8000:8000"
       - "8001:8001"
