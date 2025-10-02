@@ -8,62 +8,37 @@
 
 # 1. Быстрый старт внутреннего тестирования на 400 КТ из заранее подготовленного образа
 
-Этот образ содержит в себе все необходимые модели и скрипты для запуска инференса. Внутри образа есть скрипт `inference.py`, который и будет запускать инференс.
-
 Чтобы запустить инференс для папки с архивами, необходимо:
 
-1. Внутри файла `inference.remote.sh` необходимо заменить переменную `YOUR_INPUT_FOLDER_WITH_ZIPS` на абсолютный путь к папке с архивами.
+1. Указать системную переменную `YOUR_INPUT_FOLDER_WITH_ZIPS` на абсолютный путь к папке с архивами:
 
-⚠️ Обязательно указывайте АБСОЛЮТНЫЙ путь к исходной папке с архивами.
-
-Таким образом ваш скрипт для развертывания решения будет выглядеть следующим образом:
 ```bash
-#!/bin/bash
-
-# Путь к входным данным в папке (рекомендуется указать АБСОЛЮТНЫЙ путь)
-# Папка с zip-файлами должна иметь структуру вида:
-# YOUR_INPUT_FOLDER_WITH_ZIPS/
-#   study_id_1.zip
-#   study_id_2.zip
-#   ...
-#   final_archive.zip
-
-# НАПРИМЕР: YOUR_INPUT_FOLDER_WITH_ZIPS="/home/borntowarn/projects/chest-diseases/input"
-
-# НАПРИМЕР: YOUR_INPUT_FOLDER_WITH_ZIPS="C:/ВАШ/ПУТЬ/К/ПАПКЕ/С/АРХИВАМИ"
-
-# НАПРИМЕР: YOUR_INPUT_FOLDER_WITH_ZIPS="C:\ВАШ\ПУТЬ\К\ПАПКЕ\С\АРХИВАМИ"
-
-###########################################################################
-#                                                                         #
-#   Будьте внимательны, необходимо передать путь к ПАПКЕ, а не к файлу!   #
-#                                                                         #
-###########################################################################
-
-YOUR_INPUT_FOLDER_WITH_ZIPS="/home/borntowarn/projects/chest-diseases/input"
-YOUR_OUTPUT_FOLDER="/$PWD/output"
-
-echo "ВАШ ПУТЬ К ПАПКЕ С АРХИВАМИ: $YOUR_INPUT_FOLDER_WITH_ZIPS"
-echo "ВАШ ПУТЬ К ПАПКЕ С РЕЗУЛЬТАТАМИ: $YOUR_OUTPUT_FOLDER"
-
-docker run \
-    -it \
-    --gpus "all" \
-    -e INPUT_FOLDER="./input" \
-    -v "$YOUR_INPUT_FOLDER_WITH_ZIPS":/training/input \
-    -v "$YOUR_OUTPUT_FOLDER":/training/output \
-    borntowarn/porcupine-inference
+export YOUR_INPUT_FOLDER_WITH_ZIPS="/home/borntowarn/projects/chest-diseases/input"
+```
+или для **Windows** в Git Bash:
+```bash
+export YOUR_INPUT_FOLDER_WITH_ZIPS="C:\Users\borntowarn\Downloads\Yandex.Disk.Files"
+ИЛИ
+export YOUR_INPUT_FOLDER_WITH_ZIPS="C:/Users/borntowarn/Downloads/Yandex.Disk.Files"
 ```
 
--  Папка `INPUT_FOLDER="./input"` - внутренняя папка, в которую будут монтироваться входные данные из папки `YOUR_INPUT_FOLDER_WITH_ZIPS`
--  Папка `YOUR_OUTPUT_FOLDER` - папка, в которую будут сохраняться результаты инференса: файлы `output.xlsx` и `warnings_and_errors.txt`. Она автоматически примонтируется в локальной файловой системе и будет доступна.
+Ваша папка должна иметь структуру вида:
+```
+YOUR_INPUT_FOLDER_WITH_ZIPS/
+├── study_id_1.zip
+├── study_id_2.zip
+├── ...
+├── final_archive.zip
+```
 
 2. Запустить скрипт:
 ```bash
 bash ./inference.remote.sh
 ```
 
-Это запустит скачивание контейнера из Docker Hub и автоматически запустит скрипт `inference.py` внутри него по примонтированной папке, которая указана в `YOUR_INPUT_FOLDER_WITH_ZIPS`.
+Это запустит скачивание контейнера (~6ГБ) из Docker Hub и автоматически запустит внутренний скрипт `inference.py` по примонтированной папке, которая указана в `YOUR_INPUT_FOLDER_WITH_ZIPS`.
+
+
 Он пробежит по всем элементам папки `YOUR_INPUT_FOLDER_WITH_ZIPS`, выполнит для них инференс и сохранит в папку `output` 2 файла:
 - `output.xlsx` - результаты инференса в формате Excel
 - `warnings_and_errors.txt` - ошибки чтения файлов и предупреждения в формате txt.

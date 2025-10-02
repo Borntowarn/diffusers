@@ -48,51 +48,26 @@ python inference.py
 2. Полготовить модели и веса в соответствии с [гайдом](./models.md#3-скачивание-исходных-моделей)
 3. Подготовить папку с входными данными (архивами)
 
-4. Внутри файла `inference.local.sh` необходимо заменить переменную `YOUR_INPUT_FOLDER_WITH_ZIPS` на абсолютный путь к папке с архивами.
+4. Указать системную переменную `YOUR_INPUT_FOLDER_WITH_ZIPS` на абсолютный путь к папке с архивами:
 
-Таким образом ваш скрипт для развертывания решения будет выглядеть следующим образом:
 ```bash
-#!/bin/bash
-
-# Путь к входным данным в папке (рекомендуется указать АБСОЛЮТНЫЙ путь)
-# Папка с zip-файлами должна иметь структуру вида:
-# YOUR_INPUT_FOLDER_WITH_ZIPS/
-#   study_id_1.zip
-#   study_id_2.zip
-#   ...
-#   final_archive.zip
-
-# НАПРИМЕР: YOUR_INPUT_FOLDER_WITH_ZIPS="/home/borntowarn/projects/chest-diseases/input"
-
-# НАПРИМЕР: YOUR_INPUT_FOLDER_WITH_ZIPS="C:/ВАШ/ПУТЬ/К/ПАПКЕ/С/АРХИВАМИ"
-
-# НАПРИМЕР: YOUR_INPUT_FOLDER_WITH_ZIPS="C:\ВАШ\ПУТЬ\К\ПАПКЕ\С\АРХИВАМИ"
-
-###########################################################################
-#                                                                         #
-#   Будьте внимательны, необходимо передать путь к ПАПКЕ, а не к файлу!   #
-#                                                                         #
-###########################################################################
-
-YOUR_INPUT_FOLDER_WITH_ZIPS="/home/borntowarn/projects/chest-diseases/input"
-YOUR_OUTPUT_FOLDER="/$PWD/output"
-
-docker build -t inference -f ./Dockerfile.inference.yaml .
-
-echo "ВАШ ПУТЬ К ПАПКЕ С АРХИВАМИ: $YOUR_INPUT_FOLDER_WITH_ZIPS"
-echo "ВАШ ПУТЬ К ПАПКЕ С РЕЗУЛЬТАТАМИ: $YOUR_OUTPUT_FOLDER"
-
-docker run \
-    -it \
-    --gpus "all" \
-    -e INPUT_FOLDER="./input" \
-    -v "$YOUR_INPUT_FOLDER_WITH_ZIPS":/training/input \
-    -v "$YOUR_OUTPUT_FOLDER":/training/output \
-    inference
+export YOUR_INPUT_FOLDER_WITH_ZIPS="/home/borntowarn/projects/chest-diseases/input"
+```
+или для **Windows** в Git Bash:
+```bash
+export YOUR_INPUT_FOLDER_WITH_ZIPS="C:\Users\borntowarn\Downloads\Yandex.Disk.Files"
+ИЛИ
+export YOUR_INPUT_FOLDER_WITH_ZIPS="C:/Users/borntowarn/Downloads/Yandex.Disk.Files"
 ```
 
--  Папки `INPUT_FOLDER="./input"` - внутренняя папка, в которую будут монтироваться входные данные из папки `YOUR_INPUT_FOLDER_WITH_ZIPS`
--  Папка `YOUR_OUTPUT_FOLDER` - папка, в которую будут сохраняться результаты инференса: файлы `output.xlsx` и `warnings_and_errors.txt`. Она автоматически примонтируется в локальной файловой системе и будет доступна.
+Ваша папка должна иметь структуру вида:
+```
+YOUR_INPUT_FOLDER_WITH_ZIPS/
+├── study_id_1.zip
+├── study_id_2.zip
+├── ...
+├── final_archive.zip
+```
 
 5. Запустить скрипт инференса:
 ```bash
