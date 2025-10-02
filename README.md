@@ -168,7 +168,7 @@
 
 # <a name="7">Развертывание и тестирование. Подробная документация [здесь](./docs/README.md)</a>
 
-### Предварительные требования
+#### Предварительные требования
 - Желательно Linux, однако проверено на Windows и Windows+WSL2.
 - `Docker 24+`, `Docker Compose v2`.
 - NVIDIA драйвер и `NVIDIA Container Toolkit`.
@@ -222,7 +222,7 @@ docker run \
     borntowarn/porcupine-inference
 ```
 
--  Папки `INPUT_FOLDER="./input"` - внутренняя папка, в которую будут монтироваться входные данные из папки `YOUR_INPUT_FOLDER_WITH_ZIPS`
+-  Папка `INPUT_FOLDER="./input"` - внутренняя папка, в которую будут монтироваться входные данные из папки `YOUR_INPUT_FOLDER_WITH_ZIPS`
 -  Папка `YOUR_OUTPUT_FOLDER` - папка, в которую будут сохраняться результаты инференса: файлы `output.xlsx` и `warnings_and_errors.txt`. Она автоматически примонтируется в локальной файловой системе и будет доступна.
 
 2. Запустить скрипт:
@@ -235,7 +235,7 @@ bash ./inference.remote.sh
 ```bash
 bash ./start.remote.sh
 ```
-2. Откройте интерфейс: `http://localhost:7860`
+2. Откройте интерфейс: `http://localhost:7860` (ℹ️ не забудьте прокинуть порт на хост машину, если вы работаете через SSH)
 3. Остановите стек:
 ```bash
 bash ./stop.remote.sh
@@ -247,7 +247,6 @@ bash ./stop.remote.sh
 - Frontend (Gradio): `7860`
 
 ℹ️ Если порты заняты, остановите конфликтующие сервисы или измените порт-маппинг в compose.
-ℹ️ Не забудьте прокинуть порты на хост машину, если вы работаете через SSH (VS Code server, PyCharm)
 
 
 # <a name="8">Структура проекта</a>
