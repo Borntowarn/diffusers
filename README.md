@@ -180,65 +180,51 @@
 nvidia-smi
 ```
 
-## Быстрый старт для внутреннего тестирования. Подробная документация [здесь](./docs/inference.md#1-быстрый-старт-из-заранее-подготовленных-образов-предпочтительный-вариант)
+## Быстрый старт для внутреннего тестирования. Подробная документация [здесь](./docs/quick_start.md#1-быстрый-старт-внутреннего-тестирования-на-400-кт-из-заранее-подготовленного-образа)
 
-1. Внутри файла `inference.remote.sh` необходимо заменить переменную `YOUR_INPUT_FOLDER_WITH_ZIPS` на абсолютный путь к папке с архивами.
+Чтобы запустить инференс для папки с архивами, необходимо:
 
-⚠️ Используйте АБСОЛЮТНЫЙ путь к входной папке, иначе контейнер не увидит данные.
+1. Указать системную переменную `YOUR_INPUT_FOLDER_WITH_ZIPS` на абсолютный путь к папке с архивами:
 
-Таким образом ваш скрипт для развертывания решения будет выглядеть следующим образом:
 ```bash
-#!/bin/bash
-
-# Путь к входным данным в папке (рекомендуется указать АБСОЛЮТНЫЙ путь)
-# Папка с zip-файлами должна иметь структуру вида:
-# YOUR_INPUT_FOLDER_WITH_ZIPS/
-#   study_id_1.zip
-#   study_id_2.zip
-#   ...
-#   final_archive.zip
-
-# НАПРИМЕР: YOUR_INPUT_FOLDER_WITH_ZIPS="/home/borntowarn/projects/chest-diseases/input"
-
-# НАПРИМЕР: YOUR_INPUT_FOLDER_WITH_ZIPS="C:/ВАШ/ПУТЬ/К/ПАПКЕ/С/АРХИВАМИ"
-
-# НАПРИМЕР: YOUR_INPUT_FOLDER_WITH_ZIPS="C:\ВАШ\ПУТЬ\К\ПАПКЕ\С\АРХИВАМИ"
-
-###########################################################################
-#                                                                         #
-#   Будьте внимательны, необходимо передать путь к ПАПКЕ, а не к файлу!   #
-#                                                                         #
-###########################################################################
-
-YOUR_INPUT_FOLDER_WITH_ZIPS="/home/borntowarn/projects/chest-diseases/input"
-YOUR_OUTPUT_FOLDER="/$PWD/output"
-
-docker run \
-    -it \
-    --gpus "all" \
-    -e INPUT_FOLDER="./input" \
-    -v "$YOUR_INPUT_FOLDER_WITH_ZIPS":/training/input \
-    -v "$YOUR_OUTPUT_FOLDER":/training/output \
-    borntowarn/porcupine-inference
+export YOUR_INPUT_FOLDER_WITH_ZIPS="/home/borntowarn/projects/chest-diseases/input"
+```
+или для **Windows** в Git Bash:
+```bash
+export YOUR_INPUT_FOLDER_WITH_ZIPS="C:\Users\borntowarn\Downloads\Yandex.Disk.Files"
+ИЛИ
+export YOUR_INPUT_FOLDER_WITH_ZIPS="C:/Users/borntowarn/Downloads/Yandex.Disk.Files"
 ```
 
--  Папка `INPUT_FOLDER="./input"` - внутренняя папка, в которую будут монтироваться входные данные из папки `YOUR_INPUT_FOLDER_WITH_ZIPS`
--  Папка `YOUR_OUTPUT_FOLDER` - папка, в которую будут сохраняться результаты инференса: файлы `output.xlsx` и `warnings_and_errors.txt`. Она автоматически примонтируется в локальной файловой системе и будет доступна.
+Ваша папка должна иметь структуру вида:
+```
+YOUR_INPUT_FOLDER_WITH_ZIPS/
+├── study_id_1.zip
+├── study_id_2.zip
+├── ...
+├── final_archive.zip
+```
 
 2. Запустить скрипт:
 ```bash
 bash ./inference.remote.sh
 ```
 
-## Быстрый старт для развертывания сервиса. Подробная документация [здесь](./docs/start_services.md)
-1. Запустите стек:
+## Быстрый старт для развертывания сервиса. Подробная документация [здесь](./docs/quick_start.md#2-быстрый-старт-сервисов-из-заранее-подготовленных-образов)
+
+Чтобы запустить сервисы для развертывания решения, необходимо:
+
+1. Запустить `start.remote.sh` для запуска сервисов из Docker Hub
 ```bash
-bash ./start.remote.sh
+sh ./start.remote.sh
 ```
-2. Откройте интерфейс: `http://localhost:7860` (ℹ️ не забудьте прокинуть порт на хост машину, если вы работаете через SSH)
-3. Остановите стек:
+
+2. Откройте UI интерфейс: `http://localhost:7860` (ℹ️ не забудьте прокинуть порт на хост машину, если вы работаете через SSH)
+
+
+3. Чтобы остановить сервисы, необходимо запустить `stop.remote.sh`:
 ```bash
-bash ./stop.remote.sh
+sh ./stop.remote.sh
 ```
 
 Открытые порты:
