@@ -144,8 +144,8 @@ class Model:
             Exception: При ошибках чтения файлов или обработки изображений
         """
 
-        study_id = ''
-        series_id = ''
+        study_id = 'Отсутствует'
+        series_id = 'Отсутствует'
         data_path = Path(data_path)
         processor = InferencePreprocessor(self.bpr)
 

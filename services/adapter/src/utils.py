@@ -369,6 +369,19 @@ class InferencePreprocessor:
             )
             final_series = list(series.values())[0]
 
+        slope = getattr(final_series[0], "RescaleSlope", 1)
+        intercept = getattr(final_series[0], "RescaleIntercept", 0)
+
+        if not hasattr(final_series[0], "RescaleSlope"):
+            self.warnings.append(f"Не найден атрибут RescaleSlope. Установлено значение 1")
+        else:
+            logger.info(f"Найден атрибут RescaleSlope: {slope}")
+
+        if not hasattr(final_series[0], "RescaleIntercept"):
+            self.warnings.append(f"Не найден атрибут RescaleIntercept. Установлено значение 0")
+        else:
+            logger.info(f"Найден атрибут RescaleIntercept: {intercept}")
+
         self.check_for_missing_and_duplicate_values(final_series)
         return [Path(dcm.filename) for dcm in final_series]
 
