@@ -42,18 +42,19 @@ pip install -r requirements.txt
 pip install -e training/CT-CLIP/CT_CLIP
 pip install -e training/CT-CLIP/transformer_maskgit
 ```
+5. Ваше основное окружение для проекта готово, теперь можно приступать к работе.
 
-5. Если вы хотите запускать ноутбуки для различных тестов, то необходимо установить ipykernel в venv:
+### 4. Опциональные шаги
+
+1. Для загрузки исходных весов скачайте папку `weights.zip` с исходными моделями и весами в директорию `training/weights` из [Яндекс.Диска](https://disk.yandex.ru/d/nq0x0-Ivx93VJw). Подробнее в [гайде](./models.md#3-для-разработки)
+
+
+2. Если вы хотите запускать ноутбуки для различных тестов, то необходимо установить ipykernel в venv:
 ```bash
 pip install ipykernel
 ```
 
-6. Ваше основное окружение для проекта готово, теперь можно приступать к работе.
-
-7. Если вы хотите запускать обучение MLP модели, то необходимо установить дополнительный `requirements.txt` в директории `training/classification`:
+3. Если вы хотите запускать обучение MLP модели, то необходимо установить дополнительный `requirements.txt` в директории `training/classification`:
 ```bash
 pip install -r requirements.txt
 ```
-
-8. Для загрузки исходных весов скачайте папку `weights.zip` с исходными моделями и весами в директорию `training/weights` из [Яндекс.Диска](https://disk.yandex.ru/d/nq0x0-Ivx93VJw). Подробнее в [гайде](./models.md#3-для-разработки)
-
