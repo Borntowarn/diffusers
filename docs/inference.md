@@ -25,15 +25,10 @@ YOUR_INPUT_FOLDER_WITH_ZIPS/
 ```bash
 cd training
 ```
-4. Установить путь к входным данным в системную переменную `INPUT_FOLDER`:
+4. Установить путь к входным данным в системную переменную `INPUT_FOLDER` (для Windows используйте Git Bash):
 ```bash
 export INPUT_FOLDER="/home/borntowarn/projects/chest-diseases/input"
 ```
-Для **Windows** используйте следующую команду в командной строке :
-```bash
-set INPUT_FOLDER=C:/Users/ваш_пользователь/projects/chest-diseases/input
-```
-⚠️ На Windows избегайте пробелов в пути или экранируйте их кавычками.
 
 5. Запустить скрипт инференса:
 ```bash
@@ -70,8 +65,13 @@ YOUR_INPUT_FOLDER_WITH_ZIPS/
 ```
 
 5. Запустить скрипт инференса:
-```bash
-sh ./inference.local.sh
-```
 
+**Linux**
+```bash
+bash ./inference.local.sh
+```
+**Windows**
+```bash
+./inference.local.sh
+```
 Это запустит локальную сборку образа, копирование необходимых моделей, весов и скриптов в образ, создание окружения в контейнере и запуск инференса внутри него по примонтированной папке, которая указана в `YOUR_INPUT_FOLDER_WITH_ZIPS`.

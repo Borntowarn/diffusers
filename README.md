@@ -206,8 +206,14 @@ YOUR_INPUT_FOLDER_WITH_ZIPS/
 ```
 
 2. Запустить скрипт:
+
+**Linux**
 ```bash
 bash ./inference.remote.sh
+```
+**Windows**
+```bash
+./inference.remote.sh
 ```
 
 ## Быстрый старт для развертывания сервиса. Подробная документация [здесь](./docs/quick_start.md#2-быстрый-старт-сервисов-из-заранее-подготовленных-образов)

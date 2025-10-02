@@ -32,8 +32,14 @@ YOUR_INPUT_FOLDER_WITH_ZIPS/
 ```
 
 2. Запустить скрипт:
+
+**Linux**
 ```bash
 bash ./inference.remote.sh
+```
+**Windows**
+```bash
+./inference.remote.sh
 ```
 
 Это запустит скачивание контейнера (~6ГБ) из Docker Hub и автоматически запустит внутренний скрипт `inference.py` по примонтированной папке, которая указана в `YOUR_INPUT_FOLDER_WITH_ZIPS`.
