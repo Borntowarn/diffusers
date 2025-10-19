@@ -645,3 +645,301 @@ class MosMedDataCachingDataset(Dataset):
             logger.error(e)
             logger.error(examination_path)
             return [], [], str(examination_path), examination_path.name
+
+
+class CTRATEInferenceDataset(Dataset):
+    def __init__(self, pathes):
+        super().__init__()
+
+        self.pathes = pathes
+
+    def __len__(self):
+        return len(self.pathes)
+
+    def __getitem__(self, idx):
+        # change split
+        path = self.pathes[idx]
+
+        tensor = training_examination_to_tensor(path)
+
+        return tensor, path.name
+
+class CTWithTensorDataset(Dataset):
+    def __init__(self, csv_path, ct_base_dir, latent_base_dir):
+        """
+        Args:
+            csv_path (str or Path): path to CSV file containing 'volumenames' column
+            ct_base_dir (str): base directory for CT scans (.nii.gz)
+            latent_base_dir (str): base directory for .pt files
+            transform (callable, optional): optional transform to apply to CT tensor
+        """
+        self.df = pd.read_csv(csv_path)
+        self.ct_base_dir = ct_base_dir
+        self.latent_base_dir = latent_base_dir
+
+    def _make_path(self, base_dir, fname):
+        # Example: train_13_a_1.nii.gz
+        # → base_dir/train_13/train_13_a/train_13_a_1.nii.gz
+        parts = fname.rsplit('_', 2)
+        part1 = parts[0]                 # e.g., 'train_13'
+        part2 = fname.rsplit('_', 1)[0]  # e.g., 'train_13_a'
+        return os.path.join(base_dir, part1, part2, fname)
+
+    def __len__(self):
+        return len(self.df)
+
+    def __getitem__(self, idx):
+        fname = self.df.iloc[idx, 0]
+        # Construct file paths
+        ct_path = self._make_path(self.ct_base_dir, fname.replace('.nii.gz', '.nii.pt'))
+        latent_path = self._make_path(self.latent_base_dir, fname.replace('.nii.gz', '.nii.pt'))
+
+        ct_tensor = torch.load(ct_path)  # (1, 240, 480, 480)
+        latent_tensor = torch.load(latent_path)
+
+        return ct_tensor.squeeze(0), latent_tensor
+
+
+class MosMedDataTrainingDataset(Dataset):
+    def __init__(self, root_folder, folders, saving_folders):
+        super().__init__()
+
+        self.root_folder = Path(root_folder)
+        self.folders = [self.root_folder / folder for folder in folders]
+        self.objects = self.find_all_data_objects()
+        self.saving_folders = saving_folders
+
+    def find_all_data_objects(self):
+        """
+        Возвращает список путей к файлам, если они имеют формат .tar.gz или .nii.gz,
+        либо путь к папке, если у нее все дочерние элементы — только файлы (папка последнего уровня).
+        """
+        result = []
+
+        def _get_all_archives(folder):
+            all_archives = []
+            for path in folder.rglob("*"):
+                if path.is_file():
+                    if str(path).endswith(
+                        (".tar", ".tgz", ".tar.gz", ".nii", ".nii.gz", ".zip")
+                    ):
+                        all_archives.append(path)
+            return all_archives
+
+        def _get_all_folders(folder, need_to_be_last_level=False):
+            all_folders = []
+            find_paths = (
+                folder.rglob("*") if need_to_be_last_level else folder.glob("*")
+            )
+            for path in find_paths:
+                if path.is_dir():
+                    if need_to_be_last_level:
+                        if is_leaf_dir(path):
+                            all_folders.append(path)
+                    else:
+                        all_folders.append(path)
+            return all_folders
+
+        for folder_path in self.folders:
+            if not folder_path.exists():
+                continue
+
+            try:
+                if folder_path.name == "MosMedData-LDCT-LUNGCR-type I-v 1":
+                    examinations = _get_all_folders(
+                        folder_path / "studies", need_to_be_last_level=False
+                    )
+                elif folder_path.name == "MosMedData-CT-COVID19-type VII-v 1":
+                    examinations = _get_all_folders(
+                        folder_path / "dicom", need_to_be_last_level=True
+                    )
+                elif folder_path.name == "MosMedData-CT-COVID19-type I-v 4":
+                    examinations = _get_all_folders(
+                        folder_path / "studies", need_to_be_last_level=False
+                    )
+                elif folder_path.name == "COVID19_1110":
+                    examinations = _get_all_archives(folder_path / "studies")
+                elif folder_path.name == "CT_LUNGCANCER_500":
+                    examinations = _get_all_archives(folder_path / "dicom")
+                result.extend(examinations)
+                logger.info(f"Found {len(examinations)} examinations in {folder_path}")
+            except Exception as e:
+                logger.error(traceback.format_exc())
+                logger.error(
+                    "Пропускаем папку " + str(folder_path) + " из-за ошибки " + str(e)
+                )
+                continue
+
+        return result
+
+    def __len__(self):
+        return len(self.objects)
+
+    def __getitem__(self, idx):
+        examination_path = self.objects[idx]
+
+        tensor = training_examination_to_tensor(examination_path)
+
+        return tensor
+
+
+class CTRATENormaDataset(Dataset):
+    def __init__(self, filenames, downloaded_folder, saving_folders):
+        super().__init__()
+
+        self.downloaded_folder = downloaded_folder
+        self.saving_folders = saving_folders
+        self.filenames = filenames
+
+    def __len__(self):
+        return len(self.filenames)
+
+    def __getitem__(self, idx):
+        try:
+            vol_name = self.filenames[idx]
+
+            # Derive HuggingFace subfolder structure
+            folder1, folder2, folder3 = vol_name.split("_")[:3]
+            folder = f"{folder1}_{folder2}"
+            subfolder = f"dataset/{self.downloaded_folder}/{folder}/{folder}_{folder3}"
+
+            save_roots = [
+                CT_RATE_DIR / "dataset" / folder for folder in self.saving_folders
+            ]
+            save_paths = [
+                save_root
+                / f"{folder}/{folder}_{folder3}"
+                / (vol_name.replace(".gz", ".pt"))
+                for save_root in save_roots
+            ]
+
+            if all(os.path.exists(save_path) for save_path in save_paths):
+                logger.success(f"all tensors for {str(vol_name)} are exists")
+                return [], [], str(CT_RATE_DIR / subfolder / vol_name), vol_name
+
+            local_file = CT_RATE_DIR / subfolder / vol_name.replace(".gz", ".pt")
+
+            # Load volume into tensor
+            logger.info(f"Preprocessing {vol_name} with CT_CLIP")
+            tensor = torch.load(local_file)
+            # print(tensor.shape)
+            logger.info(f"Preprocessed {vol_name}")
+
+            return tensor, [], str(local_file), vol_name
+        except Exception as e:
+            logger.error(traceback.format_exc())
+            logger.error(e)
+            logger.error(local_file)
+            return [], [], str(local_file), vol_name
+
+
+def ct_image2tensor(image):
+    to_orientation = tio.ToOrientation("SLP")
+    image = to_orientation(image)
+    affine = image.affine
+
+    current = image.spacing
+    img_data = image.data.squeeze(0)
+
+    target_x_spacing = 0.75
+    target_y_spacing = 0.75
+    target_z_spacing = 1.5
+
+    target = (target_z_spacing, target_x_spacing, target_y_spacing)
+
+    # img_data = slope * img_data + intercept
+
+    img_data = 1 * img_data + 0
+    hu_min, hu_max = -1000, 1000
+    # print(img_data.min(), img_data.max())
+    img_data = np.clip(img_data, hu_min, hu_max)
+
+    img_data = img_data.unsqueeze(0).unsqueeze(0)
+
+    img_data = resize_array(img_data, current, target)
+    img_data = img_data[0][0]
+    img_data = np.transpose(img_data, (1, 2, 0))
+
+    img_data = (((img_data) / 1000)).astype(np.float32)
+
+    tensor = torch.tensor(img_data.copy())
+    # Get the dimensions of the input tensor
+    target_shape = (480, 480, 240)
+
+    # Extract dimensions
+    h, w, d = tensor.shape
+
+    # Calculate cropping/padding values
+    dh, dw, dd = target_shape
+    h_start = max((h - dh) // 2, 0)
+    h_end = min(h_start + dh, h)
+    w_start = max((w - dw) // 2, 0)
+    w_end = min(w_start + dw, w)
+    d_start = max((d - dd) // 2, 0)
+    d_end = min(d_start + dd, d)
+
+    # Crop
+    tensor = tensor[h_start:h_end, w_start:w_end, d_start:d_end]
+
+    # Pad
+    pad_h_before = (dh - tensor.size(0)) // 2
+    pad_h_after = dh - tensor.size(0) - pad_h_before
+    pad_w_before = (dw - tensor.size(1)) // 2
+    pad_w_after = dw - tensor.size(1) - pad_w_before
+    pad_d_before = (dd - tensor.size(2)) // 2
+    pad_d_after = dd - tensor.size(2) - pad_d_before
+
+    tensor = torch.nn.functional.pad(
+        tensor,
+        (
+            pad_d_before,
+            pad_d_after,
+            pad_w_before,
+            pad_w_after,
+            pad_h_before,
+            pad_h_after,
+        ),
+        value=-1,
+    )
+
+    tensor = tensor.permute(2, 0, 1)
+    tensor = tensor.unsqueeze(0)
+
+    return tensor
+
+def load_ct_image(data_path):
+    data_path = Path(data_path)
+
+    study_type = (
+        ExaminationType.NIFTI
+        if ".nii" in Path(data_path).suffixes
+        else ExaminationType.DICOM
+    )
+
+    with TemporaryDirectory() as archive_temp_dir, TemporaryDirectory() as thinnest_series_dir:
+        if study_type is ExaminationType.DICOM:
+            logger.info(f"Обработка DICOM исследования")
+            if data_path.is_file() and str(data_path).endswith(
+                (".zip", ".tar", ".tgz", ".tar.gz")
+            ):
+                data_path = TrainingPreprocessor.extract_archive_to_dir(data_path, archive_temp_dir)
+
+            dicom_series = TrainingPreprocessor.read_ct_series(data_path)
+            if len(dicom_series.keys()) >= 1:
+                thinnest_series_paths = (
+                    TrainingPreprocessor.get_thinnest_slice_series_with_windows_paths_(dicom_series)
+                )
+                TrainingPreprocessor.copy_files_to_directory(thinnest_series_paths, thinnest_series_dir)
+                data_path = thinnest_series_dir
+            study_id, series_id = TrainingPreprocessor.get_study_id_and_series_id(data_path)
+        else:
+            logger.info(f"Обработка NIFTI исследования")
+
+        logger.info(f"Чтение финальной серии из {data_path}")
+        image = tio.ScalarImage(data_path)
+
+        if image.data.dtype is not torch.float64:
+            affine = image.affine
+            tensor_float64 = image.data.to(torch.float64)
+            image = tio.ScalarImage(tensor=tensor_float64, affine=affine)
+        return image

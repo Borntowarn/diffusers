@@ -1,0 +1,12 @@
+mlp:
+  mlp_ckpt: /home/free4ky/projects/chest-diseases/model_binary_2025-09-29_10-34-57_3.pth
+  input_size: 512
+  num_classes: 2
+  activation: gelu
+  hidden_sizes: [256, 128]
+  dropout: 0.2
+
+vae:
+  vae_ckpt: runs/checkpoints/vae_checkpoints5/vae_epoch_100.pth
+  latent_dim: 64
+  beta: 4.0

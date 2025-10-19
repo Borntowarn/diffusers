@@ -1,0 +1,19 @@
+defaults:
+  - model: model
+  - data: dataset
+  - _self_
+
+# Logging
+log_dir: runs/ensemble_tensorboard3
+save_path: runs/checkpoints/ensemble_classifier_big.pth
+
+
+mixed_precision: null
+batch_size: 128
+lr: 3e-5
+num_epochs: 50
+warmup_steps: 50
+
+dataset_boost:
+  0: 1.0      # main dataset
+  1: 5.0      # boost underrepresented dataset
